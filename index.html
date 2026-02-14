@@ -845,16 +845,23 @@ function loadCollage(name) {
 
     const img = document.createElement('img');
     img.className = 'polaroid-img';
-    img.src = `photos/${key}/${i}.jpg`;
     img.alt = `Ore & ${name} - photo ${i}`;
     img.loading = 'lazy';
 
-    // On error, show placeholder
+    // Try multiple extensions: .jpg, .jpeg, .png, .webp
+    const exts = ['jpg', 'jpeg', 'png', 'webp'];
+    let extIdx = 0;
+    img.src = `photos/${key}/${i}.${exts[extIdx]}`;
     img.onerror = function() {
-      const placeholder = document.createElement('div');
-      placeholder.className = 'polaroid-img placeholder';
-      placeholder.textContent = `Photo ${i}`;
-      this.replaceWith(placeholder);
+      extIdx++;
+      if (extIdx < exts.length) {
+        this.src = `photos/${key}/${i}.${exts[extIdx]}`;
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'polaroid-img placeholder';
+        placeholder.textContent = `Photo ${i}`;
+        this.replaceWith(placeholder);
+      }
     };
 
     const caption = document.createElement('div');
