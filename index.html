@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Asoebi Girl? 💛</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --sage: #949D2E;
+    --sage-soft: #88A24A;
+    --sage-light: #EFE5D8;
+    --pink-blush: #FFEDFA;
+    --pink-soft: #FFFFFA;
+    --berry: #AF3C5D;
+    --berry-deep: #962547;
+    --cream: #FDF9F4;
+    --cream-dark: #EFE5D8;
+    --charcoal: #2C2C2C;
+    --green-muted: #7A8B5A;
+    --green-pale: #d4dcc4;
+  }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: floatDown 10s infinite;
+  }
+  .particle.pink { background: rgba(175,60,93,0.12); }
+  .particle.green { background: rgba(148,157,46,0.12); }
+  @keyframes floatDown {
+    0% { opacity: 0; transform: translateY(-10vh) rotate(0deg); }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; transform: translateY(105vh) rotate(360deg); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .monogram-wrapper {
+    margin-bottom: 36px;
+    animation: fadeInDown 1.2s ease-out;
+  }
+  .monogram { width: 160px; height: 160px; }
+  .monogram svg { width: 100%; height: 100%; }
+
+  .hero-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--green-muted);
+    margin-bottom: 12px;
+    animation: fadeInUp 1s ease-out 0.3s both;
+  }
+  .hero-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    animation: fadeInUp 1s ease-out 0.5s both;
+  }
+  .hero-names .amp {
+    font-style: italic;
+    color: var(--berry);
+    font-size: 36px;
+    margin: 0 6px;
+  }
+  .hero-date {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--green-muted);
+    margin-bottom: 48px;
+    animation: fadeInUp 1s ease-out 0.7s both;
+  }
+  .divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--berry), var(--sage-soft), transparent);
+    margin: 0 auto 48px;
+    animation: fadeInUp 1s ease-out 0.9s both;
+  }
+  .friend-name-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--berry);
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-out 1.1s both;
+  }
+  .question {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.3;
+    margin-bottom: 32px;
+    animation: fadeInUp 1s ease-out 1.3s both;
+  }
+  .question em { color: var(--berry); font-style: italic; }
+  .scroll-hint {
+    animation: fadeInUp 1s ease-out 1.8s both, bounce 2s ease-in-out 3s infinite;
+    color: var(--sage-soft);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* Sections */
+  .section {
+    padding: 60px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--green-muted);
+    margin-bottom: 40px;
+  }
+  .leaf-accent {
+    text-align: center;
+    margin-bottom: 32px;
+    color: var(--sage-soft);
+    font-size: 20px;
+    letter-spacing: 8px;
+  }
+
+  /* =============================================
+     📸 PHOTO COLLAGE — Polaroid style
+     ============================================= */
+  .collage-section { padding: 40px 0 60px; }
+  .collage-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+  .polaroid {
+    background: white;
+    padding: 10px 10px 36px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    transition: transform 0.4s ease;
+    position: relative;
+  }
+  .polaroid:nth-child(1) { transform: rotate(-2.5deg); }
+  .polaroid:nth-child(2) { transform: rotate(1.8deg); }
+  .polaroid:nth-child(3) { transform: rotate(1.5deg); }
+  .polaroid:nth-child(4) { transform: rotate(-1.8deg); }
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+    z-index: 2;
+  }
+  .polaroid-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #f5f0e8, #e8e0d4);
+  }
+  /* Placeholder state when image fails to load */
+  .polaroid-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #bbb;
+    text-transform: uppercase;
+  }
+  .polaroid-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #888;
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  .collage-note {
+    text-align: center;
+    margin-top: 24px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--green-muted);
+  }
+
+  @media (max-width: 400px) {
+    .collage-grid { gap: 14px; }
+    .polaroid { padding: 7px 7px 30px; }
+  }
+
+  /* Letter */
+  .letter-card {
+    background: white;
+    border: 1px solid var(--green-pale);
+    border-radius: 2px;
+    padding: 48px 40px;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .letter-card::before {
+    content: '❝';
+    font-size: 60px;
+    color: var(--green-pale);
+    position: absolute;
+    top: 10px; left: 24px;
+    line-height: 1;
+  }
+  .letter-card::after {
+    content: '';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--sage-soft), var(--berry));
+    border-radius: 2px;
+  }
+  .letter-text {
+    font-size: 18px;
+    line-height: 1.9;
+    color: #444;
+    font-weight: 300;
+  }
+  .letter-text .friend-inline {
+    color: var(--berry);
+    font-weight: 500;
+    font-style: italic;
+  }
+  .letter-text p { margin-bottom: 16px; }
+  .letter-sign {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--berry);
+    margin-top: 24px;
+    text-align: right;
+  }
+
+  /* Cost breakdown */
+  .cost-card {
+    background: white;
+    border: 1px solid var(--green-pale);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .cost-header {
+    background: linear-gradient(135deg, #3a4a2a, #4a5a35);
+    color: white;
+    padding: 28px 32px;
+    text-align: center;
+  }
+  .cost-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .cost-header p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-pale);
+  }
+  .cost-items { padding: 8px 0; }
+  .cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    border-bottom: 1px solid #f0ece4;
+    transition: background 0.2s;
+  }
+  .cost-item:last-child { border-bottom: none; }
+  .cost-item:hover { background: #fdfaf5; }
+  .cost-label { font-size: 16px; color: #444; }
+  .cost-label small {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: #999;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+  .cost-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--charcoal);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .cost-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #f8f5f0, #f0ece4);
+    border-top: 2px solid var(--green-pale);
+  }
+  .cost-total .cost-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--charcoal);
+  }
+  .cost-total .cost-amount { font-size: 22px; color: var(--berry); }
+  .cost-note {
+    text-align: center;
+    padding: 20px 32px 28px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* Hashtag */
+  .hashtag-card {
+    background: linear-gradient(135deg, var(--pink-blush), white, #f0f5e8);
+    border: 1px solid var(--green-pale);
+    border-radius: 2px;
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .hashtag-card::before {
+    content: '#';
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    color: rgba(148,157,46,0.06);
+    position: absolute;
+    top: -40px; right: -10px;
+    line-height: 1;
+    font-weight: 700;
+  }
+  .hashtag-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .hashtag-card .hashtag-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hashtag-card .hashtag-hint {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--berry);
+    position: relative;
+  }
+  .hashtag-examples {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--green-muted);
+    margin: 16px 0;
+    position: relative;
+  }
+
+  /* CTA */
+  .cta-section { text-align: center; padding: 80px 20px; }
+  .cta-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--charcoal);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .cta-text .friend-inline { color: var(--berry); }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    background: var(--berry-deep);
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .cta-btn:hover {
+    background: #7a1d36;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(150,37,71,0.25);
+  }
+
+  .footer { text-align: center; padding: 40px 20px 24px; }
+  .footer svg { width: 60px; height: 60px; margin-bottom: 12px; }
+  .footer-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-muted);
+  }
+
+  /* Name overlay */
+  .name-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--cream);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    transition: opacity 0.6s, visibility 0.6s;
+  }
+  .name-overlay.hidden { opacity: 0; visibility: hidden; }
+  .name-overlay-monogram { margin-bottom: 32px; }
+  .name-overlay-monogram svg { width: 110px; height: 110px; }
+  .name-overlay h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+  .name-overlay p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-muted);
+    margin-bottom: 40px;
+  }
+  .name-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 440px;
+    width: 100%;
+  }
+  .name-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    padding: 14px 8px;
+    background: white;
+    border: 1px solid var(--green-pale);
+    color: var(--charcoal);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .name-btn:hover {
+    background: var(--berry-deep);
+    color: white;
+    border-color: var(--berry-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(150,37,71,0.2);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero-names { font-size: 32px; }
+    .question { font-size: 28px; }
+    .letter-card { padding: 36px 24px; }
+    .cost-item { padding: 16px 20px; }
+    .cost-total { padding: 20px; }
+    .name-grid { grid-template-columns: repeat(2, 1fr); }
+    .monogram { width: 130px; height: 130px; }
+    .hashtag-card { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<svg style="display:none">
+  <defs>
+    <symbol id="oo-monogram" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="94" stroke="#949D2E" stroke-width="0.5" fill="none"/>
+      <circle cx="100" cy="100" r="84" stroke="#AF3C5D" stroke-width="0.3" fill="none"/>
+      <circle cx="100" cy="6" r="2" fill="#949D2E" opacity="0.6"/>
+      <circle cx="100" cy="194" r="2" fill="#949D2E" opacity="0.6"/>
+      <circle cx="6" cy="100" r="2" fill="#AF3C5D" opacity="0.6"/>
+      <circle cx="194" cy="100" r="2" fill="#AF3C5D" opacity="0.6"/>
+      <ellipse cx="88" cy="98" rx="28" ry="32" stroke="#2C2C2C" stroke-width="2.2" fill="none"/>
+      <ellipse cx="112" cy="98" rx="28" ry="32" stroke="#AF3C5D" stroke-width="2.2" fill="none"/>
+      <clipPath id="leftClip"><rect x="0" y="0" width="100" height="200"/></clipPath>
+      <clipPath id="rightClip"><rect x="100" y="0" width="100" height="200"/></clipPath>
+      <ellipse cx="112" cy="98" rx="28" ry="32" stroke="#AF3C5D" stroke-width="2.2" fill="none" clip-path="url(#rightClip)"/>
+      <ellipse cx="88" cy="98" rx="28" ry="32" stroke="#2C2C2C" stroke-width="2.2" fill="none" clip-path="url(#leftClip)"/>
+      <text x="100" y="140" font-family="'Playfair Display', serif" font-size="12" fill="#949D2E" text-anchor="middle" font-style="italic">&amp;</text>
+      <text x="100" y="162" font-family="'Montserrat', sans-serif" font-size="6.5" fill="#7A8B5A" letter-spacing="2.5" text-anchor="middle">10 · 10 · 2026</text>
+      <path d="M40 45 Q50 38 55 45 Q50 52 40 45Z" fill="#949D2E" opacity="0.3"/>
+      <path d="M160 45 Q150 38 145 45 Q150 52 160 45Z" fill="#949D2E" opacity="0.3"/>
+      <path d="M40 155 Q50 148 55 155 Q50 162 40 155Z" fill="#AF3C5D" opacity="0.2"/>
+      <path d="M160 155 Q150 148 145 155 Q150 162 160 155Z" fill="#AF3C5D" opacity="0.2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Name selector -->
+<div class="name-overlay" id="nameOverlay">
+  <div class="name-overlay-monogram">
+    <svg><use href="#oo-monogram"/></svg>
+  </div>
+  <h2>You're Invited</h2>
+  <p>Select your name</p>
+  <div class="name-grid" id="nameGrid"></div>
+</div>
+
+<!-- Main content -->
+<div class="container" id="mainContent" style="display:none;">
+
+  <section class="hero">
+    <div class="monogram-wrapper">
+      <div class="monogram">
+        <svg><use href="#oo-monogram"/></svg>
+      </div>
+    </div>
+    <div class="hero-subtitle">The Wedding of</div>
+    <div class="hero-names">Oreoluwa <span class="amp">&</span> Oluwole</div>
+    <div class="hero-date">October 10, 2026 &nbsp;·&nbsp; Lagos, Nigeria</div>
+    <div class="divider"></div>
+    <div class="friend-name-display">Dearest <span id="friendNameHero">Friend</span>,</div>
+    <div class="question">Will you be my <em>Asoebi Girl?</em></div>
+    <div class="scroll-hint" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">↓</div>
+  </section>
+
+  <!-- 📸 Photo Collage — loads per friend -->
+  <section class="section collage-section" id="collageSection">
+    <div class="leaf-accent">🌿</div>
+    <div class="section-title">Us, Always</div>
+    <div class="section-subtitle">A few of my favourite moments with you</div>
+    <div class="collage-grid" id="collageGrid">
+      <!-- Polaroids inserted by JS -->
+    </div>
+    <div class="collage-note" id="collageNote"></div>
+  </section>
+
+  <!-- Letter -->
+  <section class="section" id="letterSection">
+    <div class="leaf-accent">🌿</div>
+    <div class="section-title">A Note for You</div>
+    <div class="section-subtitle">From the bride-to-be</div>
+    <div class="letter-card">
+      <div class="letter-text">
+        <p>My dearest <span class="friend-inline" id="friendNameLetter">Friend</span>,</p>
+        <div id="letterBody"></div>
+      </div>
+      <div class="letter-sign">With all my love, Ore ♡</div>
+    </div>
+  </section>
+
+  <!-- Costs -->
+  <section class="section" id="costSection">
+    <div class="leaf-accent">🌿</div>
+    <div class="section-title">The Details</div>
+    <div class="section-subtitle">Estimated costs · subject to change</div>
+    <div class="cost-card">
+      <div class="cost-header">
+        <h3>Asoebi Girl Breakdown</h3>
+        <p>Lagos, Nigeria · October 2026</p>
+      </div>
+      <div class="cost-items" id="costItems"></div>
+      <div class="cost-total">
+        <div class="cost-label">Estimated Total</div>
+        <div class="cost-amount" id="costTotal">—</div>
+      </div>
+      <div class="cost-note">
+        All amounts are estimates and may be adjusted as we get closer to the date.<br>
+        I'll keep you updated with final costs and details. 🌸
+      </div>
+    </div>
+  </section>
+
+  <!-- Hashtag -->
+  <section class="section" id="hashtagSection">
+    <div class="leaf-accent">🌿</div>
+    <div class="section-title">One Tiny Favour</div>
+    <div class="section-subtitle">Before you go</div>
+    <div class="hashtag-card">
+      <h3>We Need a Wedding Hashtag 😅</h3>
+      <div class="hashtag-subtitle">
+        Look... we've planned the colours, the venue, the vibes — but somehow we still don't have a hashtag. Yes, really. So if your creative genius could bless us with something iconic, we'd be forever grateful (and might name a table after you).
+      </div>
+      <div class="hashtag-examples">
+        Think along the lines of... #TheOOs? #OreMetHerMatch? #TwoOsOneForever?<br>
+        We're genuinely open to anything. Help us. 🤣💍
+      </div>
+      <div class="hashtag-hint">Send your ideas to Ore — the funnier the better</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section" id="ctaSection">
+    <div class="cta-text">
+      So, <span class="friend-inline" id="friendNameCta">Friend</span>...<br>
+      are you in? 🌸
+    </div>
+    <a class="cta-btn" id="ctaBtn" href="#">Yes, I'm In!</a>
+    <div style="margin-top:16px; font-family:'Montserrat',sans-serif; font-size:11px; color:#999; letter-spacing:1px;">
+      Reply to Ore directly to confirm 💕
+    </div>
+  </section>
+
+  <div class="footer">
+    <svg><use href="#oo-monogram"/></svg>
+    <div class="footer-text">Forever Starts 10.10.26</div>
+  </div>
+</div>
+
+<script>
+/* =============================================
+   👥 FRIENDS LIST
+   ============================================= */
+const friends = [
+  'Olamide','Amanda','Bimpe','Kome','Mosh','Tomiwa',
+  'Paige','Oma','Damola','Kehinde','Molade','Tolani'
+];
+
+/* =============================================
+   📸 PHOTO CONFIG — Edit per friend!
+
+   Each friend has 4 photos + optional captions.
+   Photos should go in: /photos/{name}/1.jpg etc.
+
+   To set up:
+   1. Create a folder: photos/olamide/
+   2. Add 4 images named 1.jpg, 2.jpg, 3.jpg, 4.jpg
+   3. Optionally update captions below
+
+   Supported formats: .jpg, .png, .webp
+   Recommended size: 600x750px (4:5 ratio)
+   ============================================= */
+const photoConfig = {
+  olamide:  { captions: ['', '', '', ''], note: 'My day one 💛' },
+  amanda:   { captions: ['', '', '', ''], note: 'Always and forever 💛' },
+  bimpe:    { captions: ['', '', '', ''], note: 'Sister from another mister 💛' },
+  kome:     { captions: ['', '', '', ''], note: 'My ride or die 💛' },
+  mosh:     { captions: ['', '', '', ''], note: 'The one who gets me 💛' },
+  tomiwa:   { captions: ['', '', '', ''], note: 'Through it all 💛' },
+  paige:    { captions: ['', '', '', ''], note: 'My person 💛' },
+  oma:      { captions: ['', '', '', ''], note: 'Unmatched vibes 💛' },
+  damola:   { captions: ['', '', '', ''], note: 'My girl forever 💛' },
+  kehinde:  { captions: ['', '', '', ''], note: 'One of a kind 💛' },
+  molade:   { captions: ['', '', '', ''], note: 'The realest 💛' },
+  tolani:   { captions: ['', '', '', ''], note: 'Pure gold 💛' },
+};
+
+/* =============================================
+   💌 CUSTOM MESSAGES — Per-friend letters!
+
+   Add a custom message for any friend below.
+   Anyone not listed gets the default letter.
+   Use <p> tags for paragraphs.
+
+   Example:
+   olamide: `<p>Ola mi, where do I even start?...</p>
+             <p>You've been there since day one...</p>`,
+   ============================================= */
+const customMessages = {
+  // olamide: `<p>Custom message here...</p>`,
+  // amanda: `<p>Custom message here...</p>`,
+  // bimpe: `<p>Custom message here...</p>`,
+  // kome: `<p>Custom message here...</p>`,
+  // mosh: `<p>Custom message here...</p>`,
+  // tomiwa: `<p>Custom message here...</p>`,
+  // paige: `<p>Custom message here...</p>`,
+  // oma: `<p>Custom message here...</p>`,
+  // damola: `<p>Custom message here...</p>`,
+  // kehinde: `<p>Custom message here...</p>`,
+  // molade: `<p>Custom message here...</p>`,
+  // tolani: `<p>Custom message here...</p>`,
+};
+
+const defaultMessage = `<p>As I prepare to walk down the aisle and begin this beautiful new chapter with Oluwole, there is no version of my special day that doesn't include you right there beside me.</p>
+<p>You have been such an important part of my journey — through the laughter, the late-night conversations, the milestones, and everything in between. Your friendship means the world to me, and I cannot imagine celebrating this moment without you.</p>
+<p>So here I am, asking with all my heart — will you stand with me, slay with me, dance with me, and be my <strong>Asoebi Girl</strong> on October 10th, 2026 in Lagos?</p>
+<p>It would truly make my day complete to have you there. 🌸</p>`;
+
+/* =============================================
+   💰 COSTS — Edit amounts here!
+   Total auto-calculates.
+   ============================================= */
+const costs = [
+  { label: 'Asoebi Fabric', detail: 'Includes headtie material', amount: 25000 },
+  { label: 'Tailoring / Sewing', detail: 'Recommended tailor TBD', amount: 30000 },
+  { label: 'Gele Tying', detail: 'Professional headtie styling', amount: 10000 },
+  { label: 'Makeup & Hair', detail: 'Professional glam', amount: 25000 },
+  { label: 'Accommodation', detail: '2–3 nights shared with the girls', amount: 40000 },
+  { label: 'Transportation', detail: 'Airport pickup & wedding day logistics', amount: 15000 },
+  { label: 'Accessories & Extras', detail: 'Shoes, jewelry, clutch bag', amount: 20000 },
+];
+
+// Render costs
+const costEl = document.getElementById('costItems');
+let total = 0;
+costs.forEach(c => {
+  total += c.amount;
+  costEl.innerHTML += `
+    <div class="cost-item">
+      <div class="cost-label">${c.label}<small>${c.detail}</small></div>
+      <div class="cost-amount">₦${c.amount.toLocaleString()}</div>
+    </div>`;
+});
+document.getElementById('costTotal').textContent = '₦' + total.toLocaleString();
+
+// Name selection
+let selectedName = '';
+const params = new URLSearchParams(window.location.search);
+const urlName = params.get('name');
+if (urlName) {
+  const match = friends.find(f => f.toLowerCase() === urlName.toLowerCase());
+  if (match) { selectedName = match; showMain(); }
+}
+
+const grid = document.getElementById('nameGrid');
+friends.forEach(name => {
+  const btn = document.createElement('button');
+  btn.className = 'name-btn';
+  btn.textContent = name;
+  btn.onclick = () => {
+    selectedName = name;
+    document.getElementById('nameOverlay').classList.add('hidden');
+    setTimeout(showMain, 400);
+  };
+  grid.appendChild(btn);
+});
+
+function showMain() {
+  document.getElementById('nameOverlay').classList.add('hidden');
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('friendNameHero').textContent = selectedName;
+  document.getElementById('friendNameLetter').textContent = selectedName;
+  document.getElementById('friendNameCta').textContent = selectedName;
+  loadCollage(selectedName);
+  loadLetter(selectedName);
+}
+
+function loadLetter(name) {
+  const key = name.toLowerCase();
+  const msg = customMessages[key] || defaultMessage;
+  document.getElementById('letterBody').innerHTML = msg;
+}
+
+function loadCollage(name) {
+  const key = name.toLowerCase();
+  const config = photoConfig[key] || { captions: ['','','',''], note: '' };
+  const gridEl = document.getElementById('collageGrid');
+  const noteEl = document.getElementById('collageNote');
+  gridEl.innerHTML = '';
+
+  for (let i = 1; i <= 4; i++) {
+    const polaroid = document.createElement('div');
+    polaroid.className = 'polaroid';
+
+    const img = document.createElement('img');
+    img.className = 'polaroid-img';
+    img.src = `photos/${key}/${i}.jpg`;
+    img.alt = `Ore & ${name} - photo ${i}`;
+    img.loading = 'lazy';
+
+    // On error, show placeholder
+    img.onerror = function() {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'polaroid-img placeholder';
+      placeholder.textContent = `Photo ${i}`;
+      this.replaceWith(placeholder);
+    };
+
+    const caption = document.createElement('div');
+    caption.className = 'polaroid-caption';
+    caption.textContent = config.captions[i-1] || '';
+
+    polaroid.appendChild(img);
+    polaroid.appendChild(caption);
+    gridEl.appendChild(polaroid);
+  }
+
+  noteEl.textContent = config.note;
+}
+
+// Scroll reveal
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+sections.forEach(s => observer.observe(s));
+
+// Floating petals
+const particlesEl = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle ' + (Math.random() > 0.5 ? 'pink' : 'green');
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDelay = Math.random() * 10 + 's';
+  p.style.animationDuration = (8 + Math.random() * 8) + 's';
+  const s = 4 + Math.random() * 8;
+  p.style.width = s + 'px';
+  p.style.height = s * 1.3 + 'px';
+  particlesEl.appendChild(p);
+}
+</script>
+</body>
+</html>
