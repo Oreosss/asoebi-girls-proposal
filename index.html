@@ -382,6 +382,16 @@
     line-height: 1.7;
     font-style: italic;
   }
+  .cost-message {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: #666;
+    line-height: 1.85;
+    font-style: italic;
+    padding: 0 4px;
+  }
 
   /* Hashtag */
   .hashtag-card {
@@ -698,11 +708,12 @@
         <div class="cost-label">Estimated Total</div>
         <div class="cost-amount" id="costTotal">—</div>
       </div>
-      <div class="cost-note">
-        All amounts are estimates and may be adjusted as we get closer to the date.<br>
-        I'll keep you updated with final costs and details. 🌸
-      </div>
     </div>
+    <p class="cost-message">
+      These are just estimates for now — if any additional costs come up, I'll update this and keep you in the loop.
+      And truly, thank you for even considering making the trip and being here for this. It means more to me than words can say.
+      Absolutely no pressure at all — your love and support are everything. 💛
+    </p>
   </section>
 
   <!-- Hashtag -->
@@ -854,27 +865,29 @@ const defaultMessage = `<p>As I prepare to walk down the aisle and begin this be
    Total auto-calculates.
    ============================================= */
 const costs = [
-  { label: 'Asoebi Fabric', detail: 'Includes headtie material', amount: 25000 },
-  { label: 'Tailoring / Sewing', detail: 'Recommended tailor TBD', amount: 30000 },
-  { label: 'Gele Tying', detail: 'Professional headtie styling', amount: 10000 },
-  { label: 'Makeup & Hair', detail: 'Professional glam', amount: 25000 },
-  { label: 'Accommodation', detail: '2–3 nights shared with the girls', amount: 40000 },
-  { label: 'Transportation', detail: 'Airport pickup & wedding day logistics', amount: 15000 },
-  { label: 'Accessories & Extras', detail: 'Shoes, jewelry, clutch bag', amount: 20000 },
+  { label: 'Asoebi Fabric & Gele', detail: 'Fabric + headtie material · TBD', amountMin: 150000, amountMax: 175000 },
+  { label: 'Accommodation', detail: 'One night (eve of the wedding) · TBD', amountMin: 100000, amountMax: 100000 },
 ];
 
 // Render costs
 const costEl = document.getElementById('costItems');
-let total = 0;
+let totalMin = 0, totalMax = 0;
 costs.forEach(c => {
-  total += c.amount;
+  totalMin += c.amountMin;
+  totalMax += c.amountMax;
+  const amountDisplay = c.amountMin === c.amountMax
+    ? `₦${c.amountMin.toLocaleString()}`
+    : `₦${c.amountMin.toLocaleString()} – ₦${c.amountMax.toLocaleString()}`;
   costEl.innerHTML += `
     <div class="cost-item">
       <div class="cost-label">${c.label}<small>${c.detail}</small></div>
-      <div class="cost-amount">₦${c.amount.toLocaleString()}</div>
+      <div class="cost-amount">${amountDisplay}</div>
     </div>`;
 });
-document.getElementById('costTotal').textContent = '₦' + total.toLocaleString();
+const totalDisplay = totalMin === totalMax
+  ? `₦${totalMin.toLocaleString()}`
+  : `₦${totalMin.toLocaleString()} – ₦${totalMax.toLocaleString()}`;
+document.getElementById('costTotal').textContent = totalDisplay;
 
 // Name selection
 let selectedName = '';
