@@ -739,11 +739,16 @@
       are you in? 🌸
     </div>
     <div class="cta-buttons" id="ctaButtons">
-      <a class="cta-btn" id="ctaBtn" href="#">Yes, I'm In!</a>
+      <button class="cta-btn" id="ctaBtn">Yes, I'm In!</button>
       <button class="cta-btn-decline" id="declineBtn">I can't make it 💔</button>
     </div>
     <div style="margin-top:16px; font-family:'Montserrat',sans-serif; font-size:11px; color:#999; letter-spacing:1px;" id="ctaHint">
       Reply to Ore directly to confirm 💕
+    </div>
+    <div class="decline-message" id="yesMessage" style="display:none; background:#f5fbf0; border-color:#d4e8c4;">
+      <div class="decline-heart">🎉</div>
+      <h3 style="color:var(--sage);">Yay, <span id="yesName">Friend</span>!!</h3>
+      <p>I'm so happy you're in! Please text me directly to confirm and we'll sort out all the details together. 💛</p>
     </div>
     <div class="decline-message" id="declineMessage" style="display:none;">
       <div class="decline-heart">💛</div>
@@ -970,6 +975,15 @@ function loadCollage(name) {
 
   noteEl.textContent = config.note;
 }
+
+// Yes button
+document.getElementById('ctaBtn').addEventListener('click', function() {
+  document.getElementById('ctaQuestion').style.display = 'none';
+  document.getElementById('ctaButtons').style.display = 'none';
+  document.getElementById('ctaHint').style.display = 'none';
+  document.getElementById('yesName').textContent = selectedName || 'Friend';
+  document.getElementById('yesMessage').style.display = 'block';
+});
 
 // Decline button
 document.getElementById('declineBtn').addEventListener('click', function() {
